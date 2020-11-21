@@ -114,7 +114,7 @@ export default function SignUp() {
                   shrink: true,
                 }}
                 inputProps={{
-                  step: 300, // 5 min
+                  step: 300, 
                 }}
               />
             </Grid>
