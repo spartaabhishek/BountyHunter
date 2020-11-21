@@ -1,8 +1,22 @@
 const express = require("express");
 const path = require("path");
 const { db, storage } = require("../firebase/firebaseApp");
+const multer = require("multer");
+const fs = require("fs");
 
 const router = express.Router();
+// const upload = multer({ dest: 'uploads/' })
+
+var store = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../", "/uploads"));
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  },
+});
+var upload = multer({ storage: store });
 
 router.get("/", async (req, res) => {
   //firebase datafetch
@@ -11,11 +25,23 @@ router.get("/", async (req, res) => {
   res.sendFile("post.html", { root: path.join(__dirname, "../") });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   const job = req.body;
-  console.log(req.image);
-  const imgUrl = await saveImg(job.image);
-  //const status = await setData({...job,image:imgUrl})
+
+  let image = "";
+  if (req.hasOwnProperty("file")) {
+    image = fs.readFileSync(
+      path.join(__dirname, "../", "/uploads/" + req.file.filename)
+    );
+
+    const imgRef = await saveImg(image, req.file.filename);
+    imgRef.on("state_changed", null, null, function () {
+      imgRef.snapshot.ref.getDownloadURL().then(async function (imgURL) {
+        console.log("File available at", imgURL);
+        setData({ ...job, image: imgUrl });
+      });
+    });
+  }
   res.send({ status: "success" });
 });
 
@@ -30,17 +56,11 @@ async function getData() {
   return data;
 }
 
-async function saveImg(blob) {
+async function saveImg(blob, filename) {
   var storageRef = storage.ref();
-  var imgRef = storageRef
-    .child("job.jpg")
-    .put(blob, { contentType: "image/jpeg" });
+  var imgRef = storageRef.child(filename).put(blob);
 
-  imgRef.on("state_changed", null, null, function () {
-    imgRef.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-      console.log("File available at", downloadURL);
-    });
-  });
+  return imgRef;
 }
 
 async function setData(job) {

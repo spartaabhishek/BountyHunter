@@ -5,14 +5,16 @@ import Button from "../../components/Button";
 import Typography from "../../components/Typography";
 import ProductHeroLayout from "./ProductHeroLayout";
 import { Parallax } from "react-scroll-parallax";
-const backgroundImage =
-  "https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80";
+import topback from "../../svgs/topback.svg";
+
+
 
 const styles = (theme) => ({
   background: {
-    backgroundImage: `url(${backgroundImage})`,
+    backgroundImage: `url(${topback})`,
     backgroundColor: "#7fc7d9", // Average color of the background image.
     backgroundPosition: "center",
+    objectFit: "cover",
   },
   button: {
     minWidth: 200,
@@ -39,7 +41,7 @@ function ProductHero(props) {
         {" "}
         <img
           style={{ display: "none" }}
-          src={backgroundImage}
+          src={topback}
           alt="increase priority"
         />
       </Parallax>

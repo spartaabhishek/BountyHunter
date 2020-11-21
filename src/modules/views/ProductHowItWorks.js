@@ -5,6 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '../../components/Button';
 import Typography from '../../components/Typography';
+import CreateIcon from '@material-ui/icons/Create';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 const styles = (theme) => ({
   root: {
@@ -37,6 +40,7 @@ const styles = (theme) => ({
   },
   image: {
     height: 55,
+    width: 70,
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(4),
   },
@@ -58,7 +62,7 @@ function ProductHowItWorks(props) {
     <section className={classes.root}>
       <Container className={classes.container}>
         {/* <img
-          src="/static/themes/onepirate/productCurvyLines.png"
+          src=""
           className={classes.curvyLines}
           alt="curvy lines"
         /> */}
@@ -70,11 +74,7 @@ function ProductHowItWorks(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>1.</div>
-                {/* <img
-                  src="/static/themes/onepirate/productHowItWorks1.svg"
-                  alt="suitcase"
-                  className={classes.image}
-                /> */}
+                <CreateIcon className={classes.image} />
                 <Typography variant="h5" align="center">
                   Register and Login
                 </Typography>
@@ -83,11 +83,7 @@ function ProductHowItWorks(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>2.</div>
-                {/* <img
-                  src="/static/themes/onepirate/productHowItWorks2.svg"
-                  alt="graph"
-                  className={classes.image}
-                /> */}
+                <FindInPageIcon className={classes.image} />
                 <Typography variant="h5" align="center">
                   Search for a new Task or Post one
                 </Typography>
@@ -96,11 +92,7 @@ function ProductHowItWorks(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>3.</div>
-                {/* <img
-                  src="/static/themes/onepirate/productHowItWorks3.svg"
-                  alt="clock"
-                  className={classes.image}
-                /> */}
+                <MonetizationOnIcon className={classes.image} />
                 <Typography variant="h5" align="center">
                   {'Start Earning.'}
                   {'And your job gets done!'}
