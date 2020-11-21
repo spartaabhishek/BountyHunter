@@ -15,6 +15,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import eximage from "../svgs/image1.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%", // 16:9 56.25
   },
   expand: {
     transform: "rotate(0deg)",
@@ -66,7 +68,7 @@ export default function RecipeReviewCard() {
       />
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
+        image= {eximage}
         title="Paella dish"
       />
       <CardContent>
@@ -78,10 +80,10 @@ export default function RecipeReviewCard() {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <AddBoxIcon /> Accept
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon />
+          <ShareIcon /> Share
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {

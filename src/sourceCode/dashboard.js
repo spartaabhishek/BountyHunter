@@ -75,8 +75,8 @@ export default function ScrollableTabsButtonForce() {
           onChange={handleChange}
           variant="fullWidth"
           scrollButtons="on"
-          indicatorColor="#DF7332"
-          textColor="primary"
+          indicatorColor="secondary"
+          textColor="secondary"
           aria-label="tabs"
           className={classes.tabs}
         >

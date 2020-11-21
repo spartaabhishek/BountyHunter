@@ -14,18 +14,7 @@ function chat() {
           <h3>Room Name</h3>
           <p>last seen at ...</p>
         </div>
-        <div className="chat_headerRight">
-          <IconButton>
-            <SearchOutlined />
-          </IconButton>
-          <IconButton>
-            <AttachFile />
-          </IconButton>
-
-          <IconButton>
-            <MoreVert />
-          </IconButton>
-        </div>
+      
       </div>
 
       <div className="chat_body">

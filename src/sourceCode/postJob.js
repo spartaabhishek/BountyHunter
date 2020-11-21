@@ -81,14 +81,17 @@ export default function SignUp() {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextareaAutosize
-                aria-label="minimum height"
-                rowsMin={3}
-                placeholder="Minimum 3 rows"
-                placeholder="Description in not more than 1000 words"
-                required
+              <TextField
+                id="text"
+                label="Description in no more than 1000 words"
+                type="text"
+                multiline
+                rows={4}
                 className={classes.desc}
+                
               />
+
+
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -121,11 +124,10 @@ export default function SignUp() {
 
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
                 required
                 fullWidth
                 name="reward"
-                label="Enter Reward in "
+                label="Enter Reward in $"
                 type="text"
                 id="reward"
                 autoComplete=""

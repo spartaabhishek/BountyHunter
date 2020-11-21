@@ -4,7 +4,9 @@ import Dashboard from "./sourceCode/dashboard";
 import Signup from "./sourceCode/signup";
 import Index from "./sourceCode/home";
 import Post from "./sourceCode/postJob";
+import Signin from "./sourceCode/signin";
 import { ParallaxProvider } from "react-scroll-parallax";
+
 function App() {
   return (
     <Router>
