@@ -13,6 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#DF7332",
     height: "70px",
     width: "70px",
   },
@@ -37,19 +42,27 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     color: "white",
-    // backgroundColor: "primary",
+    backgroundColor: "#DF7332",
   },
   desc: {
     width: "100%",
     fontSize: "large",
   },
   fileupload: {
-    // backgroundColor: "primary",
+    backgroundColor: "#DF7332",
     color: "white",
   },
   icon: {
-    height: '40px',
-    width: '40px',
+    height: "40px",
+    width: "40px",
+    backgroundColor: "#DF7332",
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    width: "100%",
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -120,10 +133,22 @@ export default function SignUp() {
             </Grid>
 
             <Grid item xs={12}>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="Location">Location</InputLabel>
+                <Select labelId="citybox" id="location">
+                  <MenuItem value={10}>New Delhi</MenuItem>
+                  <MenuItem value={20}>Mumbai</MenuItem>
+                  <MenuItem value={30}>Chennai</MenuItem>
+                  <MenuItem value={40}>Bangalore</MenuItem>
+                  <MenuItem value={50}>Kolkata</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
               <Button
                 variant="contained"
                 component="label"
-                color="secondary"
                 className={classes.fileupload}
               >
                 Upload Image
@@ -135,7 +160,6 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            color="secondary"
             className={classes.submit}
           >
             Post

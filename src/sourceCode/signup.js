@@ -18,9 +18,8 @@ import Radio from "@material-ui/core/Radio";
 import FormLabel from "@material-ui/core/FormLabel";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import FormControl from "@material-ui/core/FormControl";
-import { createMuiTheme } from '@material-ui/core/styles';
-import { green, grey, red } from '@material-ui/core/colors';
-
+import { createMuiTheme } from "@material-ui/core/styles";
+import { green, grey, red } from "@material-ui/core/colors";
 
 function Copyright() {
   return (
@@ -35,42 +34,6 @@ function Copyright() {
   );
 }
 
-const rawTheme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#69696a',
-      main: '#28282a',
-      dark: '#1e1e1f',
-    },
-    secondary: {
-      light: '#fff5f8',
-      main: '#DF7332',
-      dark: '#953C25',
-    },
-    warning: {
-      main: '#ffc071',
-      dark: '#ffb25e',
-    },
-    error: {
-      xLight: red[50],
-      main: red[500],
-      dark: red[700],
-    },
-    success: {
-      xLight: green[50],
-      main: green[500],
-      dark: green[700],
-    },
-  },
-  typography: {
-    fontFamily: "'Work Sans', sans-serif",
-    fontSize: 14,
-    fontWeightLight: 300, // Work Sans
-    fontWeightRegular: 400, // Work Sans
-    fontWeightMedium: 700, // Roboto Condensed
-    fontFamilySecondary: "'Roboto Condensed', sans-serif",
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
       theme.palette.type === "light"
         ? theme.palette.grey[50]
         : theme.palette.grey[900],
-
+    backgroundSize: "cover",
     backgroundPosition: "center",
   },
   paper: {
@@ -94,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#DF7332",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -102,10 +65,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#DF7332",
   },
 }));
 
-export default function SignInSide() {
+export default function SignUpSide() {
   const classes = useStyles();
 
   return (
@@ -210,7 +174,7 @@ export default function SignInSide() {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color="#953C25"
               className={classes.submit}
             >
               Sign Up
