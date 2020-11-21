@@ -12,11 +12,15 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import image1 from "../svgs/image1.svg";
+import image1 from "../svgs/signupbcg.svg";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormLabel from "@material-ui/core/FormLabel";
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import FormControl from "@material-ui/core/FormControl";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { green, grey, red } from '@material-ui/core/colors';
+
 
 function Copyright() {
   return (
@@ -30,6 +34,43 @@ function Copyright() {
     </Typography>
   );
 }
+
+const rawTheme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#69696a',
+      main: '#28282a',
+      dark: '#1e1e1f',
+    },
+    secondary: {
+      light: '#fff5f8',
+      main: '#DF7332',
+      dark: '#953C25',
+    },
+    warning: {
+      main: '#ffc071',
+      dark: '#ffb25e',
+    },
+    error: {
+      xLight: red[50],
+      main: red[500],
+      dark: red[700],
+    },
+    success: {
+      xLight: green[50],
+      main: green[500],
+      dark: green[700],
+    },
+  },
+  typography: {
+    fontFamily: "'Work Sans', sans-serif",
+    fontSize: 14,
+    fontWeightLight: 300, // Work Sans
+    fontWeightRegular: 400, // Work Sans
+    fontWeightMedium: 700, // Roboto Condensed
+    fontFamilySecondary: "'Roboto Condensed', sans-serif",
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +118,7 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -92,28 +133,37 @@ export default function SignInSide() {
               autoFocus
             />
 
-            <FormLabel component="legend">Gender</FormLabel>
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Gender</FormLabel>
+              <RadioGroup row aria-label="gender" name="gender1">
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+              </RadioGroup>
+            </FormControl>
 
-            
-            <Radio
-              
-              value="a"
-              name="radio-button-demo"
-              inputProps={{ 'aria-label': 'A' }}
-            />Male
-            <Radio
-              
-              value="b"
-              name="radio-button-demo"
-              inputProps={{ 'aria-label': 'B' }}
-            />Female
-            <Radio
-              
-              value="c"
-              name="radio-button-demo"
-              inputProps={{ 'aria-label': 'C' }}
-            />Other
-
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoFocus
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -130,15 +180,31 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
+              id="phone"
+              label="Contact Number"
+              name="phone"
+              autoComplete="phone"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               name="password"
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="cpassword"
+              label="Confirm Password"
+              type="password"
+              id="cpassword"
             />
             <Button
               type="submit"
@@ -147,17 +213,12 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Already have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>

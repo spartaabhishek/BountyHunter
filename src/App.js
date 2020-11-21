@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import Dashboard from "./sourceCode/dashboard";
 import Signup from "./sourceCode/signup";
 import Index from "./sourceCode/home";
 import Post from "./sourceCode/postJob";
@@ -14,6 +14,9 @@ function App() {
         </Route>
         <Route path="/post">
           <Post />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
         </Route>
         <Route path="/">
           <ParallaxProvider>
