@@ -12,6 +12,7 @@ import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Postjob from "./postJob";
+import Addmoney from "./addmoney";
 import PersonIcon from "@material-ui/icons/Person";
 import Hunt from "./hunt";
 import Chat from "../chat/chatMaster";
@@ -93,7 +94,7 @@ export default function ScrollableTabsButtonForce() {
         </Tabs>
       </AppBar>
       <TabPanel style={{ justifyContent: "center" }} value={value} index={0}>
-        <Hunt></Hunt>
+        <Hunt />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Postjob />
@@ -102,7 +103,7 @@ export default function ScrollableTabsButtonForce() {
         History
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Add Money
+        <Addmoney />
       </TabPanel>
       <TabPanel value={value} index={4}>
         <Chat />

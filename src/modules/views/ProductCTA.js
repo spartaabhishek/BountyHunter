@@ -8,6 +8,7 @@ import Typography from "../../components/Typography";
 import TextField from "../../components/TextField";
 import Snackbar from "../../components/Snackbar";
 import Button from "../../components/Button";
+import bcgimg from "../../svgs/back3.svg";
 
 const styles = (theme) => ({
   root: {
@@ -99,7 +100,7 @@ function ProductCTA(props) {
           <Hidden smDown>
             <div className={classes.imageDots} />
             <img
-              src="https://images.unsplash.com/photo-1527853787696-f7be74f2e39a?auto=format&fit=crop&w=750&q=80"
+              src={bcgimg}
               alt="call to action"
               className={classes.image}
             />
