@@ -1,4 +1,4 @@
-const db = require('../firebase/firebaseApp')
+const { db } = require('../firebase/firebaseApp')
 
 var userConns = {}
 var concurrentRooms = {}

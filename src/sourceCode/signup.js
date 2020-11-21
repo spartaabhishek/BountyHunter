@@ -69,8 +69,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+ function handleSubmit(e,fields,confirm){
+  e.preventDefault()
+  if(fields.password===confirm){
+  fetch(`${window.location.origin}/signup`,{
+    method: "POST",
+    body: JSON.stringify(fields)
+  })
+  .then((res)=>res.json)
+  .then(data=>{
+    if(data.status==="success"){
+        window.location.href = `${window.location.origin}/login`
+    }
+  })
+ }
+}
+
+
 export default function SignUpSide() {
   const classes = useStyles();
+  const [displayName,updateName] = useState("");
+  const [uid,updateUid] = useState("");
+  const [password,updatePassword] = useState("");
+  const [cP,updateCp] = useState("");
+  const [phoneNumber,updatePhone] = useState("");
+  const [email,updateEmail] = useState("");
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -84,7 +108,7 @@ export default function SignUpSide() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(e,{displayName,uid,password,email,phoneNumber},cP)}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -95,6 +119,7 @@ export default function SignUpSide() {
               name="Name"
               autoComplete="Name"
               autoFocus
+              onChange={(e)=>updateName(e.target.value)}
             />
 
             <FormControl component="fieldset">
@@ -127,6 +152,7 @@ export default function SignUpSide() {
               label="Username"
               name="username"
               autoFocus
+              onChange={(e)=>updateUid(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -138,6 +164,7 @@ export default function SignUpSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e)=>updateEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -149,6 +176,7 @@ export default function SignUpSide() {
               name="phone"
               autoComplete="phone"
               autoFocus
+              onChange={(e)=>updatePhone(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -159,6 +187,7 @@ export default function SignUpSide() {
               label="Password"
               type="password"
               id="password"
+              onChange={(e)=>updatePassword(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -169,6 +198,7 @@ export default function SignUpSide() {
               label="Confirm Password"
               type="password"
               id="cpassword"
+              onChange={(e)=>updateCp(e.target.value)}
             />
             <Button
               type="submit"

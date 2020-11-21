@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -20,6 +20,8 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import FormControl from "@material-ui/core/FormControl";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { green, grey, red } from "@material-ui/core/colors";
+import AuthContext from "./AuthContext";
+import Auth from "./firebase";
 
 function Copyright() {
   return (
@@ -69,10 +71,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+ function handleSubmit(e,fields,updateToken){
+  e.preventDefault()
+  Auth.signInWithEmailAndPassword(fields.email, fields.password).then(user => {
+    return user.getIdToken().then(idToken => {
+      fetch(`${window.location.origin}/sessionLogin`,{
+        method: "POST",
+        body: idToken
+      }).then(res=>res.json()).then(data=>{
+        if(data.status==="success"){
+          updateToken(idToken)
+        }
+      })
+    });
+  }).catch((e) => {
+    window.location.assign('/signin');
+  });
+}
+
 export default function SignIpSide() {
   const classes = useStyles();
+  const [uid,updateUid] = useState("");
+  const [password,updatePassword] = useState("");
 
   return (
+    <AuthContext.Consumer>
+    {(token,updateToken)=>(
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -84,7 +108,7 @@ export default function SignIpSide() {
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(e,{uid,password},updateToken)}>
             
             <TextField
               variant="outlined"
@@ -95,6 +119,7 @@ export default function SignIpSide() {
               label="Username"
               name="username"
               autoFocus
+              onChange={(e)=>updateUid(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -105,6 +130,7 @@ export default function SignIpSide() {
               label="Password"
               type="password"
               id="password"
+              onChange={(e)=>updatePassword(e.target.value)}
             />
             <Button
               type="submit"
@@ -129,5 +155,7 @@ export default function SignIpSide() {
         </div>
       </Grid>
     </Grid>
+    )}
+    </AuthContext.Consumer>
   );
 }

@@ -1,10 +1,11 @@
 const express = require("express");
 const path = require("path");
-const { db, storage } = require("../firebase/firebaseApp");
+const { db } = require("../firebase/firebaseApp");
 const multer = require("multer");
 const fs = require("fs");
 
 const router = express.Router();
+
 
 var store = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -17,32 +18,19 @@ var store = multer.diskStorage({
 });
 var upload = multer({ storage: store });
 
-router.get("/", async (req, res) => {
-  //firebase datafetch
-  //const data = await getData();
 
-  res.sendFile("post.html", { root: path.join(__dirname, "../") });
+router.get("/", async (req, res) => {
+  
+  const data = await getData();
+  res.send(data);
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
   const job = req.body;
-
-  // let image = "";
-  // if (req.hasOwnProperty("file")) {
-  //   image = fs.readFileSync(
-  //     path.join(__dirname, "../", "/uploads/" + req.file.filename)
-  //   );
-
-  //   const imgRef = await saveImg(image, req.file.filename);
-  //   imgRef.on("state_changed", null, null, function () {
-  //     imgRef.snapshot.ref.getDownloadURL().then(async function (imgURL) {
-  //       console.log("File available at", imgURL);
-  //       
-  //     });
-  //   });
-  // }
-
-  setData(job);
+  var img = "default"
+  if(req.hasOwnProperty('file')) img = req.file.filename
+  
+  await setData({...job,img});
   res.send({ status: "success" });
 });
 
