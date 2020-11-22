@@ -72,26 +72,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
  function handleSubmit(e,fields,updateToken){
-  e.preventDefault()
-  Auth.signInWithEmailAndPassword(fields.email, fields.password).then(user => {
-    return user.getIdToken().then(idToken => {
-      fetch(`${window.location.origin}/sessionLogin`,{
-        method: "POST",
-        body: idToken
-      }).then(res=>res.json()).then(data=>{
-        if(data.status==="success"){
-          updateToken(idToken)
-        }
-      })
-    });
-  }).catch((e) => {
-    window.location.assign('/signin');
-  });
+  
+ fetch(`${window.location.origin}/signin`,{
+   method: "POST",
+   body: JSON.stringify(fields),
+   headers: {"Content-Type": "application/json"}
+ }).then(res=>window.location.href=`${window.location.origin}/dashboard`)
+//  .then(data=>{
+//     if(data.status==="success"){
+//           window.location.href = `${window.location.origin}/dashboard`
+//         }
+//       else{
+//         window.location.href = `${window.location.origin}/signin`
+//       }
+//     })
 }
+
 
 export default function SignIpSide() {
   const classes = useStyles();
-  const [uid,updateUid] = useState("");
+  const [username,updateUid] = useState("");
   const [password,updatePassword] = useState("");
 
   return (
@@ -108,7 +108,7 @@ export default function SignIpSide() {
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
-          <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(e,{uid,password},updateToken)}>
+          <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(e,{username,password},updateToken)}>
             
             <TextField
               variant="outlined"
@@ -119,6 +119,7 @@ export default function SignIpSide() {
               label="Username"
               name="username"
               autoFocus
+              value = {username}
               onChange={(e)=>updateUid(e.target.value)}
             />
             <TextField

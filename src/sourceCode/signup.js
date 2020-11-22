@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -16,10 +15,7 @@ import image1 from "../svgs/signupbcg.svg";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormLabel from "@material-ui/core/FormLabel";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import FormControl from "@material-ui/core/FormControl";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { green, grey, red } from "@material-ui/core/colors";
 
 function Copyright() {
   return (
@@ -33,7 +29,6 @@ function Copyright() {
     </Typography>
   );
 }
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,32 +64,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
- function handleSubmit(e,fields,confirm){
-  e.preventDefault()
-  if(fields.password===confirm){
-  fetch(`${window.location.origin}/signup`,{
-    method: "POST",
-    body: JSON.stringify(fields)
-  })
-  .then((res)=>res.json)
-  .then(data=>{
-    if(data.status==="success"){
-        window.location.href = `${window.location.origin}/login`
-    }
-  })
- }
+function handleSubmit(fields, confirm) {
+  console.log(fields);
+  if (fields.password === confirm) {
+    fetch(`${window.location.origin}/signup`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(fields),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "success") {
+          window.location.href = `${window.location.origin}/signin`;
+        }
+      });
+  }
 }
-
 
 export default function SignUpSide() {
   const classes = useStyles();
-  const [displayName,updateName] = useState("");
-  const [uid,updateUid] = useState("");
-  const [password,updatePassword] = useState("");
-  const [cP,updateCp] = useState("");
-  const [phoneNumber,updatePhone] = useState("");
-  const [email,updateEmail] = useState("");
+  const [name, updateName] = useState("");
+  const [username, updateUid] = useState("");
+  const [password, updatePassword] = useState("");
+  const [cP, updateCp] = useState("");
+  const [mobile, updatePhone] = useState("");
+  const [email, updateEmail] = useState("");
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -108,118 +102,123 @@ export default function SignUpSide() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(e,{displayName,uid,password,email,phoneNumber},cP)}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Full Name"
-              name="Name"
-              autoComplete="Name"
-              autoFocus
-              onChange={(e)=>updateName(e.target.value)}
-            />
 
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Gender</FormLabel>
-              <RadioGroup row aria-label="gender" name="gender1">
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-                <FormControlLabel
-                  value="other"
-                  control={<Radio />}
-                  label="Other"
-                />
-              </RadioGroup>
-            </FormControl>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Full Name"
+            name="Name"
+            autoComplete="Name"
+            autoFocus
+            value={name}
+            onChange={(e) => updateName(e.target.value)}
+          />
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoFocus
-              onChange={(e)=>updateUid(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e)=>updateEmail(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="phone"
-              label="Contact Number"
-              name="phone"
-              autoComplete="phone"
-              autoFocus
-              onChange={(e)=>updatePhone(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              onChange={(e)=>updatePassword(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="cpassword"
-              label="Confirm Password"
-              type="password"
-              id="cpassword"
-              onChange={(e)=>updateCp(e.target.value)}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="#953C25"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Already have an account? Sign In"}
-                </Link>
-              </Grid>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup row aria-label="gender" name="gender1">
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="other"
+                control={<Radio />}
+                label="Other"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoFocus
+            display={username}
+            onChange={(e) => updateUid(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            display={email}
+            onChange={(e) => updateEmail(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="phone"
+            label="Contact Number"
+            name="phone"
+            autoComplete="phone"
+            autoFocus
+            value={mobile}
+            onChange={(e) => updatePhone(e.target.value)}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => updatePassword(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="cpassword"
+            label="Confirm Password"
+            type="password"
+            id="cpassword"
+            password={cP}
+            onChange={(e) => updateCp(e.target.value)}
+          />
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="#953C25"
+            className={classes.submit}
+            onClick={() =>
+              handleSubmit({ name, username, password, email, mobile }, cP)
+            }
+          >
+            Sign Up
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Link href="#" variant="body2">
+                {"Already have an account? Sign In"}
+              </Link>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
+          </Grid>
+          <Box mt={5}>
+            <Copyright />
+          </Box>
         </div>
       </Grid>
     </Grid>

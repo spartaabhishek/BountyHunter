@@ -25,6 +25,13 @@ router.get("/", async (req, res) => {
   res.send(data);
 });
 
+router.get("/:usename", async (req,res)=>{
+  const {username} = req.params
+  const data = await getDataByUsername(username);
+  res.send(data);
+})
+
+
 router.post("/", upload.single("image"), async (req, res) => {
   const job = req.body;
   var img = "default"
@@ -34,8 +41,21 @@ router.post("/", upload.single("image"), async (req, res) => {
   res.send({ status: "success" });
 });
 
+
+
 async function getData() {
   const jobsRef = db.collection("jobs");
+  const docs = await jobsRef.get();
+  var data = [];
+  docs.forEach((doc) => {
+    console.log(doc.id, "=>", doc.data());
+    data.push(doc.data());
+  });
+  return data;
+}
+
+async function getDataByUsername(user) {
+  const jobsRef = db.collection("jobs").where("userId",user);
   const docs = await jobsRef.get();
   var data = [];
   docs.forEach((doc) => {

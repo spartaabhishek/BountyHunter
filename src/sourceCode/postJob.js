@@ -1,21 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import PostAddOutlinedIcon from "@material-ui/icons/PostAddOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -66,7 +60,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleSubmit(fields) {
+  fetch(`${window.location.origin}/jobs`, {
+    method: "POST",
+    body: JSON.stringify(fields),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data));
+}
+
 export default function SignUp() {
+  const [desc, updateDesc] = useState("");
+  const [date, updateDate] = useState("");
+  const [time, updateTime] = useState("");
+  const [reward, updateReward] = useState("");
+  const [location, updateLocation] = useState("");
+
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -78,7 +88,11 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Post a Job
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={(e) => handleSubmit({ desc, date, time, reward, location })}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -88,10 +102,9 @@ export default function SignUp() {
                 multiline
                 rows={4}
                 className={classes.desc}
-                
+                value={desc}
+                onChange={(e) => updateDesc(e.target.value)}
               />
-
-
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -104,6 +117,8 @@ export default function SignUp() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={date}
+                onChange={(e) => updateDate(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -117,8 +132,10 @@ export default function SignUp() {
                   shrink: true,
                 }}
                 inputProps={{
-                  step: 300, 
+                  step: 300,
                 }}
+                value={time}
+                onChange={(e) => updateTime(e.target.value)}
               />
             </Grid>
 
@@ -131,18 +148,25 @@ export default function SignUp() {
                 type="text"
                 id="reward"
                 autoComplete=""
+                value={reward}
+                onChange={(e) => updateReward(e.target.value)}
               />
             </Grid>
 
             <Grid item xs={12}>
               <FormControl className={classes.formControl}>
                 <InputLabel id="Location">Location</InputLabel>
-                <Select labelId="citybox" id="location">
-                  <MenuItem value={10}>New Delhi</MenuItem>
-                  <MenuItem value={20}>Mumbai</MenuItem>
-                  <MenuItem value={30}>Chennai</MenuItem>
-                  <MenuItem value={40}>Bangalore</MenuItem>
-                  <MenuItem value={50}>Kolkata</MenuItem>
+                <Select
+                  labelId="citybox"
+                  id="location"
+                  value={location}
+                  onChange={(e) => updateLocation(e.target.value)}
+                >
+                  <MenuItem value={"delhi"}>New Delhi</MenuItem>
+                  <MenuItem value={"mumbai"}>Mumbai</MenuItem>
+                  <MenuItem value={"chennai"}>Chennai</MenuItem>
+                  <MenuItem value={"bangalore"}>Bangalore</MenuItem>
+                  <MenuItem value={"kolkata"}>Kolkata</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -154,7 +178,7 @@ export default function SignUp() {
                 className={classes.fileupload}
               >
                 Upload Image
-                <input type="file" hidden />
+                <input type="file" name="image" hidden />
               </Button>
             </Grid>
           </Grid>

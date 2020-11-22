@@ -4,7 +4,8 @@ var serviceAccount = require("./serviceAccountKey.json");
 
 
 firebase.initializeApp({
-	credential: firebase.credential.cert(serviceAccount)
+	credential: firebase.credential.cert(serviceAccount),
+	databaseURL: "https://unihack-27ee8.firebaseio.com"
 });
 
 const db = firebase.firestore();
